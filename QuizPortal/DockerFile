@@ -1,17 +1,19 @@
-# Use the official .NET SDK as a build environment
+# Use official .NET SDK image
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /app
 
-# Copy project files and restore dependencies
-COPY *.csproj ./
-RUN dotnet restore
-
-# Copy the rest of the project files and build the application
+# Copy and restore dependencies
 COPY . ./
+RUN dotnet restore
 RUN dotnet publish -c Release -o out
 
-# Use the official .NET runtime as the execution environment
+# Use runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:3.1
 WORKDIR /app
 COPY --from=build /app/out .
-ENTRYPOINT ["dotnet", "QuizPortal.dll"]
+
+# Expose port
+EXPOSE 8080
+
+# Run the application
+ENTRYPOINT ["dotnet", "QuizApp.dll"]
