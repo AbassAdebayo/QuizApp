@@ -1,19 +1,19 @@
-# Use official .NET SDK image
-FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /app
-
-# Copy and restore dependencies
-COPY . ./
-RUN dotnet restore
-RUN dotnet publish -c Release -o out
-
-# Use runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
-WORKDIR /app
-COPY --from=build /app/out .
-
-# Expose port
-EXPOSE 8080
-
-# Run the application
-ENTRYPOINT ["dotnet", "QuizApp.dll"]
+# # Use official .NET SDK image
+# FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
+# WORKDIR /app
+# 
+# # Copy and restore dependencies
+# COPY . ./
+# RUN dotnet restore
+# RUN dotnet publish -c Release -o out
+# 
+# # Use runtime image
+# FROM mcr.microsoft.com/dotnet/aspnet:3.1
+# WORKDIR /app
+# COPY --from=build /app/out .
+# 
+# # Expose port
+# EXPOSE 8080
+# 
+# # Run the application
+# ENTRYPOINT ["dotnet", "QuizApp.dll"]
